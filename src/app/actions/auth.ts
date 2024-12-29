@@ -1,7 +1,7 @@
 "use server";
 
 import "server-only";
-import { SignupFormSchema, SignupFormState, LoginFormSchema, LoginFormState } from "../lib/auth"
+import { SignupFormSchema, SignupFormState, LoginFormSchema, LoginFormState } from "../lib/schema"
 import { createSession, deleteSession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
 
