@@ -11,10 +11,8 @@ const SignupButton = () => {
     )
 }
 
-// export default SignupButton
-
 export function SignupForm() {
-    const [state, signupAction] = useActionState(signup, undefined)
+    const [state, signupAction] = useActionState(signup, undefined);
     return (
         <form action={signupAction}>
             <div>
