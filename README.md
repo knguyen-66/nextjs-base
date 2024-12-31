@@ -20,6 +20,18 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Database
+
+The project uses SQLite for storing development data. Drizzle is used as ORM.
+
+```bash
+# To setup the database file
+npx drizzle-kit push
+# To make & apply new migration
+npx drizzle-kit generate
+npx drizzle-kit migrate
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
