@@ -1,12 +1,15 @@
 // import getSession from ""
 
-import { logout } from "./actions/auth";
+import {Button} from "@/components/ui/button";
+import {logout} from "./actions/auth";
 
 export default function Home() {
-  return (
-    <section>
-      <h1>Home</h1>
-      <button onClick={logout}>Log out</button>
-    </section>
-  );
+    return (
+        <section>
+            <Button>Click me</Button>
+            <h1>Home</h1>
+
+            <button onClick={logout}>Log out</button>
+        </section>
+    );
 }

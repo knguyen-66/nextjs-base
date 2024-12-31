@@ -12,7 +12,7 @@ const testUser = {
     password: 'testpassword',
 };
 
-export async function signup(state: SignupFormState, formData: FormData) {
+export async function register(state: SignupFormState, formData: FormData) {
     const validatedFields = SignupFormSchema.safeParse({
         username: formData.get('username') as string,
         email: formData.get('email') as string,
@@ -28,6 +28,8 @@ export async function login(state: LoginFormState, formData: FormData) {
         username: formData.get('username') as string,
         password: formData.get('password') as string,
     });
+    console.log('username:' + formData.get('username') + ':' + validatedFields.success);
+    debugger;
     if (!validatedFields.success) {
         return { errors: validatedFields.error.flatten().fieldErrors };
     }
