@@ -1,8 +1,8 @@
-import { db } from "@/app/db"
-import { logout } from "./actions/auth";
-import { usersTable } from "./db/schema";
+import { db } from "@/db"
+import { logout } from "@/actions/auth";
+import { userTable } from "@/db/schema";
 
-export default function Home() {
+export default function Index() {
     return (
         <section>
             <div className="flex flex-col gap-2 justify-start">
@@ -10,7 +10,7 @@ export default function Home() {
 
                 <button className="w-40 bg-gray-700" onClick={async () => {
                     "use server";
-                    db.select().from(usersTable).then((users) => {
+                    db.select().from(userTable).then((users) => {
                         console.log('Getting all users from the database: ', users);
                     });
                 }}>Test DB</button>

@@ -1,9 +1,9 @@
 import React from 'react'
-import {RegisterForm} from "@/app/components/RegisterForm";
+import { RegisterForm } from "@/components/RegisterForm";
 
 const RegisterPage = () => {
     return (
-        <RegisterForm/>
+        <RegisterForm />
     )
 }
 

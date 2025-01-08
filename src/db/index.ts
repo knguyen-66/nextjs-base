@@ -5,7 +5,7 @@ export const db = drizzle({
     connection: {
         // url: process.env.DB_FILE_NAME!
         url: "file:app.db",
-    }
+    },
 });
 
 // async function test_db() {

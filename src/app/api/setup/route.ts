@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as argon2 from "argon2";
-import { db } from '@/app/db';
-import { usersTable } from '@/app/db/schema';
+import { db } from '@/db';
+import { roleTable, userTable } from '@/db/schema';
 
 // type ResponseData = {
 //     message: string
@@ -11,16 +11,30 @@ import { usersTable } from '@/app/db/schema';
 export async function GET(req: NextRequest) {
     // const testUser = await db.select().from(usersTable).where(eq(usersTable.username, "testuser")).limit(1);
     // if (!testUser) {
-    const user: typeof usersTable.$inferInsert = {
+    const adminRole: typeof roleTable.$inferInsert = {
+        name: 'Admin',
+        description: 'Base admin role. Can do anything.',
+        is_admin_role: 1,
+    };
+    const testUser: typeof userTable.$inferInsert = {
         email: 'testuser@example.com',
         username: 'testuser',
-        password: await argon2.hash('testpassword'),
+        password: await argon2.hash('testuserpassword'),
     };
+    const testAdmin: typeof userTable.$inferInsert = {
+        email: 'testadmin@example.com',
+        username: 'testadmin',
+        password: await argon2.hash('testadminpassword'),
+    };
+
     try {
-        await db.insert(usersTable).values(user).returning();
-        return NextResponse.json({ message: "Test user created." }, { status: 201 })
+        const insertedRole = await db.insert(roleTable).values(adminRole).returning();
+        testAdmin.id_role = insertedRole[0].id;
+        await db.insert(userTable).values(testUser);
+        await db.insert(userTable).values(testAdmin);
+        return NextResponse.json({ message: "Test users created." }, { status: 201 })
     } catch (error) {
         console.log(error)
-        return NextResponse.json({ message: "Test user already existed." }, { status: 200 })
+        return NextResponse.json({ message: "Test users already existed." }, { status: 200 })
     }
 }

@@ -4,10 +4,10 @@ import "server-only";
 import { redirect } from "next/navigation";
 import * as argon2 from "argon2";
 import { eq, or } from "drizzle-orm";
-import { db } from "@/app/db";
-import { usersTable } from "../db/schema";
-import { SignupFormSchema, SignupFormState, LoginFormSchema, LoginFormState } from "@/app/lib/schema"
-import { createSession, deleteSession } from "@/app/lib/session";
+import { db } from "@/db";
+import { userTable } from "../db/schema";
+import { SignupFormSchema, SignupFormState, LoginFormSchema, LoginFormState } from "@/lib/schema"
+import { createSession, deleteSession } from "@/lib/session";
 
 // const testUser = {
 //     id: "1",
@@ -26,15 +26,15 @@ export async function register(state: SignupFormState, formData: FormData) {
         return { errors: validatedFields.error.flatten().fieldErrors };
     }
 
-    const existedUsers = await db.select().from(usersTable).where(or(
-        eq(usersTable.username, validatedFields.data.username),
-        eq(usersTable.email, validatedFields.data.email))).limit(1);
+    const existedUsers = await db.select().from(userTable).where(or(
+        eq(userTable.username, validatedFields.data.username),
+        eq(userTable.email, validatedFields.data.email))).limit(1);
     if (existedUsers.length > 0) {
         return { errors: ['Username or email existed'] } as SignupFormState;
     }
 
     try {
-        await db.insert(usersTable).values({
+        await db.insert(userTable).values({
             username: validatedFields.data.username,
             email: validatedFields.data.email,
             password: await argon2.hash(validatedFields.data.password)
@@ -50,13 +50,11 @@ export async function login(state: LoginFormState, formData: FormData) {
         username: formData.get('username') as string,
         password: formData.get('password') as string,
     });
-    console.log('username:' + formData.get('username') + ':' + validatedFields.success);
-    debugger;
+    // console.log('username:' + formData.get('username'));
     if (!validatedFields.success) {
         return { errors: validatedFields.error.flatten().fieldErrors };
     }
-
-    const existedUser = await db.select().from(usersTable).where(eq(usersTable.username, validatedFields.data.username)).limit(1);
+    const existedUser = await db.select().from(userTable).where(eq(userTable.username, validatedFields.data.username)).limit(1);
     if (existedUser.length == 0 || !await argon2.verify(existedUser[0].password, validatedFields.data.password)) {
         return { errors: { password: ['Invalid username or password'] } } as LoginFormState;
     }
