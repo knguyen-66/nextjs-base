@@ -1,4 +1,5 @@
-import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { sql } from "drizzle-orm";
+import { check, int, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const roleTable = sqliteTable("table_role", {
     id: int().primaryKey({ autoIncrement: true }),
@@ -14,4 +15,17 @@ export const userTable = sqliteTable("table_user", {
     password: text().notNull(),
     id_role: int().references(() => roleTable.id),
 });
+
+export const unitTable = sqliteTable("table_unit", {
+    id: int().primaryKey({ autoIncrement: true }),
+    name: text().notNull(),
+    phone: text().notNull(),
+    addressCodeProvince: int(),
+    addressCodeDistrict: int(),
+    addressCodeWard: int(),
+    addressDetail: text(),
+    type: text().notNull().default("Client"),
+}, (table) => [{
+    checkConstraint: check("type_constraint", sql`${table.type} IN ["Client", "Collector", "Recycler"]`),
+}]);
 

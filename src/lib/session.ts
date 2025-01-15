@@ -8,7 +8,7 @@ const expirationDays = 7;
 const encodedSecretKey = new TextEncoder().encode("env-secret-key");
 
 type SessionPayload = {
-    userId: string;
+    userId: number;
     expiresAt: Date;
 }
 
@@ -27,7 +27,7 @@ export async function decrypt(token: string | undefined = "") {
     };
 };
 
-export async function createSession(userId: string) {
+export async function createSession(userId: number) {
     const expiresAt = new Date(Date.now() + expirationDays * 24 * 60 * 60 * 1000);
     const sessionToken = await encrypt({ userId, expiresAt: expiresAt });
     (await cookies()).set("session", sessionToken, {
@@ -42,11 +42,10 @@ export async function deleteSession() {
     (await cookies()).delete("session");
 };
 
-// export async function getSession(token: string) {
-//     const { payload } = await decrypt(token);
-//     payload.exp = new Date(payload.exp);
-//     if (payload.expiresAt < new Date.now()) {
-//         return null;
-//     }
-//     return payload.userId;
-// }
+export async function getSessionPayload(token: string | undefined = "") {
+    const jwtPayload = await decrypt(token);
+    if (!jwtPayload || !jwtPayload.exp || jwtPayload.exp < new Date().getTime() / 1000) {
+        return undefined;
+    }
+    return jwtPayload as SessionPayload;
+}

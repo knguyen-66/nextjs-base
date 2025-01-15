@@ -23,6 +23,12 @@ export const LoginFormSchema = z.object({
     password: z.string().min(8, { message: 'Be at least 8 characters long' }).trim(),
 })
 
+export const EditUserFormSchema = z.object({
+    oldPassword: z.string().min(8, { message: 'Be at least 8 characters long' }).trim(),
+    newPassword: z.string().min(8, { message: 'Be at least 8 characters long' }).trim(),
+    confirmPassword: z.string().min(8, { message: 'Be at least 8 characters long' }).trim(),
+})
+
 export type SignupFormState =
     | {
         errors?: {
@@ -44,3 +50,13 @@ export type LoginFormState =
     }
     | undefined
 
+export type EditUserFormState =
+    | {
+        errors?: {
+            oldPassword?: string[]
+            newPassword?: string[]
+            confirmPassword?: string[]
+        }
+        message?: string
+    }
+    | undefined

@@ -1,9 +1,27 @@
 "use client"
 import { useGlobalContext } from '@/context/GlobalContextProvider'
-import { SidebarTrigger } from './ui/sidebar'
+import { SidebarTrigger } from '@/components/ui/sidebar'
+import { getUser } from '@/actions/user';
+import { redirect } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export const AppHeader = () => {
     const { title } = useGlobalContext();
+    const [username, setUsername] = useState('Profile');
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            console.info("app header fetching user");
+            const user = await getUser();
+            if (!user) {
+                console.error('User not found');
+                return;
+            }
+            setUsername(user.username);
+        };
+        fetchUserData();
+    }, []);
+
     return (
         <div className='flex flex-col'>
             <div className="flex shrink-0 items-center h-10 m-2 gap-2">
@@ -12,10 +30,10 @@ export const AppHeader = () => {
                 <h1 className="text-xl font-bold ml-4">
                     {title}
                 </h1>
-                <div className="grow" />
+                <div className="grow" />  {/* fill remaining space */}
                 <div>
-                    <button className="bg-blue-500 text-white font-bold py-2 px-2 rounded">
-                        User
+                    <button className="bg-blue-800 text-white font-bold py-2 px-2 rounded" onClick={() => redirect("/profile")}>
+                        {username}
                     </button>
                 </div>
             </div>

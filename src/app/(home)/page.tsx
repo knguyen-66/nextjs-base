@@ -1,6 +1,5 @@
 "use client"
 
-import { logout } from "@/actions/auth";
 import { useGlobalContext } from "@/context/GlobalContextProvider";
 import { testDB } from "./logic";
 import { useEffect } from "react";
@@ -15,7 +14,6 @@ export default function HomePage() {
             <div className="flex flex-col gap-2 justify-start">
                 <h1>Home</h1>
                 <button className="w-40 bg-gray-700" onClick={testDB}>Test DB</button>
-                <button className="w-40 bg-gray-700" onClick={logout}>Log out</button>
             </div>
         </section>
     );

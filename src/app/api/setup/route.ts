@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import * as argon2 from "argon2";
 import { db } from '@/db';
 import { roleTable, userTable } from '@/db/schema';
+import { eq } from 'drizzle-orm';
 
 // type ResponseData = {
 //     message: string
@@ -28,6 +29,11 @@ export async function GET(req: NextRequest) {
     };
 
     try {
+        // clear old data
+        await db.delete(userTable).where(eq(userTable.username, testUser.username));
+        await db.delete(userTable).where(eq(userTable.username, testAdmin.username));
+        await db.delete(roleTable).where(eq(roleTable.name, adminRole.name));
+        // insert new data
         const insertedRole = await db.insert(roleTable).values(adminRole).returning();
         testAdmin.id_role = insertedRole[0].id;
         await db.insert(userTable).values(testUser);
