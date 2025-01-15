@@ -13,9 +13,6 @@ export default async function middleware(req: NextRequest) {
     const isProtectedRoute = protectedRoutes.includes(path)
     const isPublicRoute = publicRoutes.includes(path)
     // const isSkipRoute = skipRoutes.includes(path.split('/')[1])
-
-    console.log(path)
-
     // if (isSkipRoute) {
     //     return NextResponse.next()
     // }

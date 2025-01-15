@@ -9,13 +9,6 @@ import { userTable } from "../db/schema";
 import { SignupFormSchema, SignupFormState, LoginFormSchema, LoginFormState } from "@/lib/schema"
 import { createSession, deleteSession } from "@/lib/session";
 
-// const testUser = {
-//     id: "1",
-//     username: 'testuser',
-//     email: 'testuser@email.com',
-//     password: 'testpassword',
-// };
-
 export async function register(state: SignupFormState, formData: FormData) {
     const validatedFields = SignupFormSchema.safeParse({
         username: formData.get('username') as string,
