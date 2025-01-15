@@ -16,7 +16,7 @@ export async function getUser() {
         return undefined;
     }
     const payload = await getSessionPayload(cookie);
-    if (!payload || !payload.userId) {
+    if (!payload) {
         return undefined;
     }
     const user = await db.select({
@@ -45,7 +45,7 @@ export async function editUserInformation(state: EditUserFormState, formData: Fo
 
     const session = (await cookies()).get('session')?.value;
     const payload = await getSessionPayload(session);
-    if (!payload || !payload.userId) {
+    if (!payload) {
         return { errors: { oldPassword: ['User not authenticated'] } } as EditUserFormState;
     }
 

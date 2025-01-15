@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/input';
 
 const SubmitButton = () => {
     const { pending } = useFormStatus();
-
     return (
         <Button variant="outline" type="submit" disabled={pending}>
             {pending ? "Loading..." : "Submit"}

@@ -43,7 +43,6 @@ export async function login(state: LoginFormState, formData: FormData) {
         username: formData.get('username') as string,
         password: formData.get('password') as string,
     });
-    // console.log('username:' + formData.get('username'));
     if (!validatedFields.success) {
         return { errors: validatedFields.error.flatten().fieldErrors } as LoginFormState;
     }
@@ -53,11 +52,11 @@ export async function login(state: LoginFormState, formData: FormData) {
             return { errors: { password: ['Invalid username or password'] } } as LoginFormState;
         }
         await createSession(existedUser[0].id);
-        redirect('/');
     } catch (error) {
         console.log(error);
         return { errors: ['Unexpected error when login. Please try again later'] } as LoginFormState;
     }
+    redirect('/');
 }
 
 export async function logout() {
