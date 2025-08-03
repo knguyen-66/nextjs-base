@@ -20,10 +20,10 @@ export async function decrypt(token: string | undefined = "") {
     try {
         const { payload } = await jwtVerify(token, encodedSecretKey, {
             algorithms: ['HS256'],
-        })
+        });
         return payload
     } catch (error) {
-        console.info('Failed to verify session:', error);
+        console.info('Failed to verify session:', error.message);
     };
 };
 

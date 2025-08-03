@@ -28,6 +28,10 @@ export default {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
 					foreground: 'hsl(var(--muted-foreground))'
@@ -65,7 +69,12 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
-			}
+			},
+			fontFamily: {
+				sans: ["var(--font-sans)"],
+				serif: ["var(--font-serif)"],
+				mono: ["var(--font-mono)"],
+			},
 		}
 	},
 	// eslint-disable-next-line @typescript-eslint/no-require-imports

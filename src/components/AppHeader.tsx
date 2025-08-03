@@ -4,6 +4,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar'
 import { getUser } from '@/actions/user';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { Button } from './ui/button';
 
 export const AppHeader = () => {
     const { title } = useGlobalContext();
@@ -32,9 +33,9 @@ export const AppHeader = () => {
                 </h1>
                 <div className="grow" />  {/* fill remaining space */}
                 <div>
-                    <button className="bg-blue-800 text-white font-bold py-2 px-2 rounded" onClick={() => redirect("/profile")}>
+                    <Button onClick={() => redirect("/profile")}>
                         {username}
-                    </button>
+                    </Button>
                 </div>
             </div>
             <span className="w-full h-px bg-gray-600"></span>

@@ -11,7 +11,7 @@ const SchedulePage = () => {
 
     useEffect(() => {
         setTitle("Schedule");
-    }, []);
+    }, [setTitle]);
 
     return (
         <div className='grid grid-cols-3 gap-5'>

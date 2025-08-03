@@ -22,7 +22,7 @@ export async function getUser() {
     const user = await db.select({
         id: userTable.id,
         username: userTable.username,
-        id_role: userTable.id_role
+        id_role: userTable.id_role,
     }).from(userTable).where(eq(userTable.id, payload.userId)).limit(1);
     if (user.length == 0) {
         return undefined;

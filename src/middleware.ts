@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSessionPayload } from '@/lib/session'
 import { cookies } from 'next/headers'
+// import { getUser } from '@/actions/user'
 
 // 1. Specify protected and public routes
-// const protectedRoutes = ['/']
+// const protectedRoutes = ['/administrator']
 const publicRoutes = ['/login', '/signup']
 
 export default async function middleware(req: NextRequest) {
@@ -11,7 +12,7 @@ export default async function middleware(req: NextRequest) {
     // 2. Check if the current route is protected or public
     const path = req.nextUrl.pathname;
     const isPublicRoute = publicRoutes.includes(path);
-    // const isProtectedRoute = protectedRoutes.includes(path)
+    // const isProtectedRoute = protectedRoutes.includes(path);
 
     // 3. Decrypt the session from the cookie
     const cookie = (await cookies()).get('session')?.value;
@@ -27,6 +28,17 @@ export default async function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL('/', req.nextUrl));
     }
 
+    // if (isProtectedRoute && payload?.userId) {
+    //     try {
+    //         const user = await getUser();
+    //         if (user?.id_role !== 1) {
+    //             return NextResponse.redirect
+    //         }
+    //     }
+    //     catch (error) {
+    //         console.error(error)
+    //     }
+    // }
     return NextResponse.next();
 }
 

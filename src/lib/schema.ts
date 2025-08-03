@@ -29,6 +29,16 @@ export const EditUserFormSchema = z.object({
     confirmPassword: z.string().min(8, { message: 'Be at least 8 characters long' }).trim(),
 })
 
+export const NewUnitSchema = z.object({
+    name: z.string().nonempty({ message: "Unit name is requrired" }).trim(),
+    phone: z.string().nonempty({ message: "Phone number is required" }).trim().max(11),
+    addressCodeProvince: z.number(),
+    addressCodeDistrict: z.number(),
+    addressCodeWard: z.number(),
+    addressDetail: z.string().nonempty({ message: "Detail address is required" }).trim(),
+    type: z.enum(['Client', 'Collector', 'Recycler']),
+})
+
 export type SignupFormState =
     | {
         errors?: {
@@ -56,6 +66,21 @@ export type EditUserFormState =
             oldPassword?: string[]
             newPassword?: string[]
             confirmPassword?: string[]
+        }
+        message?: string
+    }
+    | undefined
+
+export type NewUnitState =
+    | {
+        errors?: {
+            name?: string[]
+            phone?: string[]
+            addressCodeProvince?: string[]
+            addressCodeDistrict?: string[]
+            addressCodeWard?: string[]
+            addressDetail?: string[]
+            type?: string[]
         }
         message?: string
     }

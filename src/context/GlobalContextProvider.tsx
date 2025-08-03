@@ -10,7 +10,7 @@ type Context = {
 const GlobalContext = createContext<Context>({
     title: "GRAC",
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    setTitle: function (title: string): void {
+    setTitle: function(title: string): void {
         throw new Error("Function not implemented.");
     }
 });

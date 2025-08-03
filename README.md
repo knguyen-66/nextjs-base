@@ -32,6 +32,10 @@ npx drizzle-kit generate
 npx drizzle-kit migrate
 ```
 
+## UI
+
+The project use Shadcn for component library
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
